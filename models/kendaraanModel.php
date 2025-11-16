@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * FILE: models/kendaraanModel.php
+ * FUNGSI: Model untuk tabel kendaraan
+ */
 class kendaraanModel {
     private $conn;
     private $table = 'kendaraan';

@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * FILE: index.php
+ * FUNGSI: Controller utama yang menangani semua request
+ */
 require_once 'config/database.php';
 require_once 'models/kendaraanModel.php';
 require_once 'models/tipeKendaraanModel.php';

@@ -1,4 +1,8 @@
 <?php
+/**
+ * FILE: test_koneksi.php
+ * FUNGSI: Untuk menguji koneksi ke database
+ */
 include "config/database.php";
 
 $db = new Database();
