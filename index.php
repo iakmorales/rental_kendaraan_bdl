@@ -20,4 +20,13 @@ $pelangganModel = new PelangganModel($db);
 $rentalModel = new RentalModel($db);
 $pengembalianModel = new PengembalianModel($db);
 
+$action = isset($_GET['action']) ? $_GET['action'] : 'dashboard';
+
+switch ($action) {
+    case 'dashboard':
+        include 'views/dashboard.php';
+        break;
+
+    
+}
 ?>

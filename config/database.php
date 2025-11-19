@@ -6,9 +6,9 @@
 class Database {
     private $host = "localhost";
     private $port = "5433";
-    private $db_name = "db_rental_kendaraan";
+    private $db_name = "db_rental_kendaraan2";
     private $username = "postgres";
-    private $password = "AdminMi29";
+    private $password = "iak1246";
     public $conn;
 
     public function getConnection() {
