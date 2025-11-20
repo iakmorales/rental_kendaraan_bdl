@@ -12,9 +12,9 @@ class pengembalianModel {
         $this->conn = $db;
     }
 
-     // METHOD 1: Read semua pengembalian
+    // METHOD 1: Read semua pengembalian
     public function getAllPengembalian() {
-        $query = "SELECT * FROM " . $this->table_name . " ORDER BY id DESC";
+        $query = "SELECT * FROM " . $this->table . " ORDER BY id DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
@@ -22,7 +22,7 @@ class pengembalianModel {
 
     // METHOD 2: Create Pelanggan baru
     public function createPengembalian($data) {
-        $query = "INSERT INTO " . $this->table_name . " (pengembalian_id, rental_id, tanggal_kembali_aktual, denda, kondisi_akhir) VALUES (:pengembalian_id, :rental_id, :tanggal_kembali_aktual, :denda, :kondisi_akhir)";
+        $query = "INSERT INTO " . $this->table . " (pengembalian_id, rental_id, tanggal_kembali_aktual, denda, kondisi_akhir) VALUES (:pengembalian_id, :rental_id, :tanggal_kembali_aktual, :denda, :kondisi_akhir)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -38,7 +38,7 @@ class pengembalianModel {
 
     // METHOD 4: Delete pengembalian berdasarkan ID
     public function deletePengembalian($id) {
-        $query = "DELETE FROM " . $this->table_name . " WHERE pengembalian_id = :pengembalian_id";
+        $query = "DELETE FROM " . $this->table . " WHERE pengembalian_id = :pengembalian_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":pengembalian_id", $id);
         return $stmt->execute();

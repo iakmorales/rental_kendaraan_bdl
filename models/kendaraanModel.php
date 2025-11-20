@@ -5,7 +5,7 @@
  */
 class kendaraanModel {
     private $conn;
-    private $table = 'Kendaraan';
+    private $table = 'Kendaraan';   
 
     // constructor
     public function __construct($db) {
@@ -14,7 +14,7 @@ class kendaraanModel {
 
     // METHOD 1: Read semua kendaraan
     public function getAllVehicles() {
-        $query = "SELECT * FROM " . $this->table_name . " ORDER BY id DESC";
+        $query = "SELECT * FROM " . $this->table . " ORDER BY id DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
@@ -22,7 +22,7 @@ class kendaraanModel {
 
     // METHOD 2: Create kendaraan baru
     public function createVehicle($data) {
-        $query = "INSERT INTO " . $this->table_name . " (kendaraan_id, tipe_id, plat_nomor, merk, model, tahun, harga_sewa_per_hari, status_ketersediaan) VALUES (:kendaraan_id, :tipe_id, :plat_nomor, :merk, :model, :tahun, :harga_sewa_per_hari, :status_ketersediaan)";
+        $query = "INSERT INTO " . $this->table . " (kendaraan_id, tipe_id, plat_nomor, merk, model, tahun, harga_sewa_per_hari, status_ketersediaan) VALUES (:kendaraan_id, :tipe_id, :plat_nomor, :merk, :model, :tahun, :harga_sewa_per_hari, :status_ketersediaan)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -41,7 +41,7 @@ class kendaraanModel {
 
     // METHOD 4: Delete kendaraan berdasarkan ID
     public function deleteVehicle($id) {
-        $query = "DELETE FROM " . $this->table_name . " WHERE kendaraan_id = :kendaraan_id";
+        $query = "DELETE FROM " . $this->table . " WHERE kendaraan_id = :kendaraan_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":kendaraan_id", $id);
         return $stmt->execute();

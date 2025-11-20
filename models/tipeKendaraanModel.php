@@ -14,7 +14,7 @@ class tipeKendaraanModel {
 
      // METHOD 1: Read semua tipe kendaraan
     public function getAllTipeKendaraan() {
-        $query = "SELECT * FROM " . $this->table_name . " ORDER BY id DESC";
+        $query = "SELECT * FROM " . $this->table . " ORDER BY id DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
@@ -22,7 +22,7 @@ class tipeKendaraanModel {
 
     // METHOD 2: Create tipe kendaraan baru
     public function createTipeKendaraan($data) {
-        $query = "INSERT INTO " . $this->table_name . " (tipe_id, nama_tipe, deskripsi) VALUES (:tipe_id, :nama_tipe, :deskripsi)";
+        $query = "INSERT INTO " . $this->table . " (tipe_id, nama_tipe, deskripsi) VALUES (:tipe_id, :nama_tipe, :deskripsi)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -36,7 +36,7 @@ class tipeKendaraanModel {
 
     // METHOD 4: Delete tipe berdasarkan ID
     public function deleteTipeKendaraan($id) {
-        $query = "DELETE FROM " . $this->table_name . " WHERE tipe_id = :tipe_id";
+        $query = "DELETE FROM " . $this->table . " WHERE tipe_id = :tipe_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":tipe_id", $id);
         return $stmt->execute();

@@ -14,7 +14,7 @@ class rentalModel {
 
      // METHOD 1: Read semua rental
     public function getAllRental() {
-        $query = "SELECT * FROM " . $this->table_name . " ORDER BY id DESC";
+        $query = "SELECT * FROM " . $this->table . " ORDER BY id DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
@@ -22,7 +22,7 @@ class rentalModel {
 
     // METHOD 2: Create rental baru
     public function createRental($data) {
-        $query = "INSERT INTO " . $this->table_name . " (rental_id, pelanggan_id, kendaraan_id, sopir_id, tanggal_mulai, tanggal_selesai_rencana, total_biaya_rencana, status_rental) VALUES (:rental_id, :pelanggan_id, :kendaraan_id, :sopir_id, :tanggal_mulai, :tanggal_selesai_rencana, :total_biaya_rencana, :status_rental)";
+        $query = "INSERT INTO " . $this->table . " (rental_id, pelanggan_id, kendaraan_id, sopir_id, tanggal_mulai, tanggal_selesai_rencana, total_biaya_rencana, status_rental) VALUES (:rental_id, :pelanggan_id, :kendaraan_id, :sopir_id, :tanggal_mulai, :tanggal_selesai_rencana, :total_biaya_rencana, :status_rental)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -41,7 +41,7 @@ class rentalModel {
 
     // METHOD 4: Delete rental berdasarkan ID
     public function deleteRental($id) {
-        $query = "DELETE FROM " . $this->table_name . " WHERE rental_id = :rental_id";
+        $query = "DELETE FROM " . $this->table . " WHERE rental_id = :rental_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":rental_id", $id);
         return $stmt->execute();

@@ -14,7 +14,7 @@ class sopirModel {
 
      // METHOD 1: Read semua sopir
     public function getAllSopir() {
-        $query = "SELECT * FROM " . $this->table_name . " ORDER BY id DESC";
+        $query = "SELECT * FROM " . $this->table . " ORDER BY id DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
@@ -22,7 +22,7 @@ class sopirModel {
 
     // METHOD 2: Create sopir baru
     public function createSopir($data) {
-        $query = "INSERT INTO " . $this->table_name . " (sopir_id, nama_sopir, no_telepon, tarif_sopir_per_hari, status) VALUES (:sopir_id, :nama_sopir, :no_telepon, :tarif_sopir_per_hari, :status)";
+        $query = "INSERT INTO " . $this->table . " (sopir_id, nama_sopir, no_telepon, tarif_sopir_per_hari, status) VALUES (:sopir_id, :nama_sopir, :no_telepon, :tarif_sopir_per_hari, :status)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -38,7 +38,7 @@ class sopirModel {
 
     // METHOD 4: Delete sopir berdasarkan ID
     public function deleteSopir($id) {
-        $query = "DELETE FROM " . $this->table_name . " WHERE sopir_id = :sopir_id";
+        $query = "DELETE FROM " . $this->table . " WHERE sopir_id = :sopir_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":sopir_id", $id);
         return $stmt->execute();

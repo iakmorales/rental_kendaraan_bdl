@@ -14,7 +14,7 @@ class pelangganModel {
 
      // METHOD 1: Read semua pelanggan
     public function getAllPelanggan() {
-        $query = "SELECT * FROM " . $this->table_name . " ORDER BY id DESC";
+        $query = "SELECT * FROM " . $this->table . " ORDER BY id DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
@@ -22,7 +22,7 @@ class pelangganModel {
 
     // METHOD 2: Create Pelanggan baru
     public function createPelanggan($data) {
-        $query = "INSERT INTO " . $this->table_name . " (pelanggan_id, nama_pelanggan, no_ktp, no_telepon, email, alamat) VALUES (:pelanggan_id, :nama_pelanggan, :no_ktp, :no_telepon, :email, :alamat)";
+        $query = "INSERT INTO " . $this->table . " (pelanggan_id, nama_pelanggan, no_ktp, no_telepon, email, alamat) VALUES (:pelanggan_id, :nama_pelanggan, :no_ktp, :no_telepon, :email, :alamat)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -40,7 +40,7 @@ class pelangganModel {
 
     // METHOD 4: Delete pelanggan berdasarkan ID
     public function deletePelanggan($id) {
-        $query = "DELETE FROM " . $this->table_name . " WHERE pelanggan_id = :pelanggan_id";
+        $query = "DELETE FROM " . $this->table . " WHERE pelanggan_id = :pelanggan_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":pelanggan_id", $id);
         return $stmt->execute();
