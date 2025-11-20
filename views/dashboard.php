@@ -1,89 +1,72 @@
 <?php
 /**
-* FILE: views/dashboard.php
-* FUNGSI: Menampilkan dashboard dengan data statistik
-*/
-include 'views/header.php';
+ * FILE: views/dashboard.php
+ * FUNGSI: Menampilkan halaman Dashboard Admin
+ */
+include 'views/layout/header.php';
 ?>
 
 <style>
-    .hero {
-        width: 100%;
-        height: 100vh;
-        background: url('image/hero_mobil.jpg');
-        background-size: cover;
-        background-position: center;
-        position: relative;
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
         display: flex;
-        align-items: center;
-        justify-content: center;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
     }
 
-    .hero::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
+    .main-container {
+        display: flex;
         width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.55);
-        z-index: 1;
-    }
-
-    .hero-container {
-        width: 90%;
-        max-width: 1100px;  
+        max-width: 1400px;
         margin: 0 auto;
-        position: relative;
-        z-index: 2;
-        text-align: center;
-        color: white;
+        flex: 1;
     }
 
-    .hero-container h1 {
-        font-size: 50px;
-        font-weight: bold;
-        margin-bottom: 10px;
+    .content-area {
+        flex: 1;
+        padding: 2rem;
+        background-color: #f9f9f9;
     }
 
-    .hero-container p {
-        font-size: 18px;
-        margin-bottom: 25px;
-        opacity: 0.9;
+    .content-header h1 {
+        font-size: 2rem;
+        color: #202020;
+        margin-bottom: 0.5rem;
     }
 
-    /* Tombol */
-    .btn {
-        display: inline-block;
-        padding: 12px 25px;
-        margin: 8px;
-        border-radius: 8px;
-        font-size: 15px;
-        text-decoration: none;
-        font-weight: bold;
+    .content-header p {
+        color: #666;
+        margin-bottom: 1.5rem;
     }
 
-    .btn-yellow {
-        background: #f1cd26;
-        color: black;
-    }
-
-    .btn-green {
-        background: #0b8f5a;
-        color: white;
+    .content-body {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        min-height: 350px;
     }
 </style>
 
-<div class="hero">
-    <div class="hero-container">
-        <h1>Explore the Road Ahead<br>with Max Drive Rentals</h1>
+<div class="main-container">
 
-        <p>
-            Whether it's a weekend trip or a business journey, our reliable and stylish fleet is 
-            ready to take you where you need to go — on time, every time.
-        </p>
+    <!-- Sidebar yang sudah disendirikan -->
+    <?php include 'views/layout/sidebar.php'; ?>
 
-        <a class="btn btn-yellow" href="#">Reserve Your Car</a>
-    </div>
+    <!-- Area konten -->
+    <main class="content-area">
+        <div class="content-header">
+            <h1>Dashboard Admin</h1>
+            <p>Selamat datang di halaman dashboard admin.</p>
+        </div>
+
+        <div class="content-body">
+            <p style="color: #666;">Area konten utama - silakan sesuaikan konten dashboard Anda.</p>
+        </div>
+    </main>
+
 </div>
-<?php include 'views/footer.php'; ?>
+
+<?php include 'views/layout/footer.php'; ?>
