@@ -5,7 +5,7 @@
  */
 class pengembalianModel {
     private $conn;
-    private $table = 'Pengembalian';
+    private $table_name = 'Pengembalian';
 
     // constructor
     public function __construct($db) {
@@ -36,7 +36,27 @@ class pengembalianModel {
         return $stmt->execute();
     }
 
-    // METHOD 4: Delete pengembalian berdasarkan ID
+    // METHOD 3: Hitung keterlambatan pengembalian
+    public function hitungKeterlambatan($rental_id, $tanggal_kembali) {
+        $query = "SELECT total_keterlambatan(:rental, :tgl) AS telat";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':rental', $rental_id);
+        $stmt->bindParam(':tgl', $tanggal_kembali);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // METHOD 4: Hitung denda keterlambatan
+    public function hitungDenda($rental_id, $tanggal_kembali) {
+        $query = "SELECT hitung_denda(:rental, :tgl) AS denda";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':rental', $rental_id);
+        $stmt->bindParam(':tgl', $tanggal_kembali);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    
+    // METHOD 5: Delete pengembalian berdasarkan ID
     public function deletePengembalian($id) {
         $query = "DELETE FROM " . $this->table . " WHERE pengembalian_id = :pengembalian_id";
         $stmt = $this->conn->prepare($query);
