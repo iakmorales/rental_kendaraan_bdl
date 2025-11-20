@@ -5,7 +5,7 @@
  */
 class pengembalianModel {
     private $conn;
-    private $table_name = 'Pengembalian';
+    private $table = 'Pengembalian';
 
     // constructor
     public function __construct($db) {
