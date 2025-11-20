@@ -24,6 +24,7 @@ $action = isset($_GET['action']) ? $_GET['action'] : 'dashboard';
 
 switch ($action) {
     case 'dashboard':
+        $active = 'dashboard';
         include 'views/dashboard.php';
         break;
 
