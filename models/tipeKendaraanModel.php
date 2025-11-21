@@ -22,7 +22,7 @@ class tipeKendaraanModel {
 
     // METHOD 2: Create tipe kendaraan baru
     public function createTipeKendaraan($data) {
-        $query = "INSERT INTO " . $this->table . " (tipe_id, nama_tipe, deskripsi) VALUES (:tipe_id, :nama_tipe, :deskripsi)";
+        $query = "INSERT INTO " . $this->table . " (nama_tipe, deskripsi) VALUES (:tipe_id, :nama_tipe, :deskripsi)";
 
         $stmt = $this->conn->prepare($query);
 
@@ -30,6 +30,27 @@ class tipeKendaraanModel {
         $stmt->bindParam(":tipe_id", $data['tipe_id']);
         $stmt->bindParam(":nama_tipe", $data['nama_tipe']);
         $stmt->bindParam(":deskripsi", $data['deskripsi']);
+        
+        return $stmt->execute();
+    }
+
+    public function getTipeKendaraanById($id) {
+        $query = "SELECT * FROM " . $this->table . " WHERE tipe_id = :tipe_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":tipe_id", $id);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    public function updateTipeKendaraan($id, $data) {
+        $query = "UPDATE " . $this->table . " SET nama_tipe = :nama_tipe, deskripsi = :deskripsi WHERE tipe_id = :tipe_id";
+
+        $stmt = $this->conn->prepare($query);
+
+        // Bind parameters untuk keamanan (mencegah SQL injection)
+        $stmt->bindParam(":nama_tipe", $data['nama_tipe']);
+        $stmt->bindParam(":deskripsi", $data['deskripsi']);
+        $stmt->bindParam(":tipe_id", $id);
         
         return $stmt->execute();
     }

@@ -105,6 +105,13 @@ $current = isset($_GET['action']) ? $_GET['action'] : 'dashboard';
         </li>
 
         <li class="menu-item">
+            <a href="index.php?action=pengembalian" class="<?= $current=='pengembalian'?'active':'' ?>">
+                <span class="menu-icon">↩️</span>
+                <span>User</span>
+            </a>
+        </li>
+
+        <li class="menu-item">
             <a href="index.php?action=logout" class="<?= $current=='logout'?'active':'' ?>">
                 <span class="menu-icon">🚪</span>
                 <span>Logout</span>

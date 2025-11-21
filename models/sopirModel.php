@@ -20,13 +20,13 @@ class sopirModel {
         return $stmt;
     }
 
-    // METHOD 2: Create sopir baru
+    
     public function createSopir($data) {
         $query = "INSERT INTO " . $this->table . " (sopir_id, nama_sopir, no_telepon, tarif_sopir_per_hari, status) VALUES (:sopir_id, :nama_sopir, :no_telepon, :tarif_sopir_per_hari, :status)";
 
         $stmt = $this->conn->prepare($query);
 
-        // Bind parameters untuk keamanan (mencegah SQL injection)
+        
         $stmt->bindParam(":sopir_id", $data['sopir_id']);
         $stmt->bindParam(":nama_sopir", $data['nama_sopir']);
         $stmt->bindParam(":no_telepon", $data['no_telepon']);
@@ -36,7 +36,29 @@ class sopirModel {
         return $stmt->execute();
     }
 
-    // METHOD 4: Delete sopir berdasarkan ID
+    public function getSopirById($id) {
+        $query = "SELECT * FROM " . $this->table . " WHERE sopir_id = :sopir_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":sopir_id", $id);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    public function updateSopir($id, $data) {
+        $query = "UPDATE " . $this->table . " SET nama_sopir = :nama_sopir, no_telepon = :no_telepon, tarif_sopir_per_hari = :tarif_sopir_per_hari, status = :status WHERE sopir_id = :sopir_id";
+
+        $stmt = $this->conn->prepare($query);
+
+        
+        $stmt->bindParam(":nama_sopir", $data['nama_sopir']);
+        $stmt->bindParam(":no_telepon", $data['no_telepon']);
+        $stmt->bindParam(":tarif_sopir_per_hari", $data['tarif_sopir_per_hari']);
+        $stmt->bindParam(":status", $data['status']);
+        $stmt->bindParam(":sopir_id", $id);
+        
+        return $stmt->execute();
+    }
+    
     public function deleteSopir($id) {
         $query = "DELETE FROM " . $this->table . " WHERE sopir_id = :sopir_id";
         $stmt = $this->conn->prepare($query);
