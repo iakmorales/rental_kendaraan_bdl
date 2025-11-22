@@ -1,60 +1,63 @@
-<style>
-    .sidebar {
-        width: 250px;
-        background-color: white;
-        padding: 2rem 0;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.05);
-    }
+        <style>
+            .sidebar {
+                width: 250px;
+                background-color: white;
+                padding: 2rem 0;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+                position: fixed;
+                top: 70px;
+                left: 0;
+                bottom: 0;
+                overflow-y: auto;
+                z-index: 100;
+            }
 
-    .sidebar-menu {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
+            .sidebar-menu {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
 
-    .menu-item {
-        padding: 0;
-    }
+            .menu-item {
+                padding: 0;
+            }
 
-    .menu-item a {
-        padding: 0.875rem 2rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        color: #666;
-        font-weight: 500;
-        text-decoration: none;
-        transition: 0.3s ease;
-        border-left: 3px solid transparent;
-    }
+            .menu-item a {
+                padding: 0.875rem 2rem;
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+                color: #666;
+                font-weight: 500;
+                text-decoration: none;
+                transition: 0.3s ease;
+                border-left: 3px solid transparent;
+            }
 
-    .menu-item a:hover {
-        background-color: #FFF8E1;
-        border-left-color: #FFD100;
-        color: #202020;
-    }
+            .menu-item a:hover {
+                background-color: #FFF8E1;
+                border-left-color: #FFD100;
+                color: #202020;
+            }
 
-    .menu-item a.active {
-        background-color: #FFEE32;
-        border-left-color: #FFD100;
-        color: #202020;
-    }
+            .menu-item a.active {
+                background-color: #FFEE32;
+                border-left-color: #FFD100;
+                color: #202020;
+            }
 
-    .menu-icon {
-        width: 20px;
-        display: flex;
-        justify-content: center;
-    }
-</style>
+            .menu-icon {
+                width: 20px;
+                display: flex;
+                justify-content: center;
+                font-size: 1.2rem;
+            }
+        </style>
 
-<?php 
-// ambil action sekarang agar auto-active
-$current = isset($_GET['action']) ? $_GET['action'] : 'dashboard';
-?>
+<?php $current = isset($_GET['action']) ? $_GET['action'] : 'dashboard'; ?>
 
 <aside class="sidebar">
     <ul class="sidebar-menu">
-
         <li class="menu-item">
             <a href="index.php?action=dashboard" class="<?= $current=='dashboard'?'active':'' ?>">
                 <span class="menu-icon">📊</span>
@@ -105,8 +108,8 @@ $current = isset($_GET['action']) ? $_GET['action'] : 'dashboard';
         </li>
 
         <li class="menu-item">
-            <a href="index.php?action=pengembalian" class="<?= $current=='pengembalian'?'active':'' ?>">
-                <span class="menu-icon">↩️</span>
+            <a href="index.php?action=users" class="<?= $current=='users'?'active':'' ?>">
+                <span class="menu-icon">👥</span>
                 <span>User</span>
             </a>
         </li>
@@ -117,6 +120,5 @@ $current = isset($_GET['action']) ? $_GET['action'] : 'dashboard';
                 <span>Logout</span>
             </a>
         </li>
-
     </ul>
 </aside>

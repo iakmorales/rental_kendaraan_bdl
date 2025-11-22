@@ -17,23 +17,24 @@ include 'views/layout/header.php';
     }
 
     .main-container {
+        margin-top: 70px; 
+        margin-left: 250px; 
+        padding: 2rem;
         display: flex;
-        width: 100%;
-        max-width: 1400px;
-        margin: 0 auto;
-        flex: 1;
+        justify-content: center; 
+        margin-bottom: 150px;
     }
 
     .content-area {
-        flex: 1;
-        padding: 2rem;
-        background-color: #f9f9f9;
+        width: 100%;
+        max-width: 900px; 
+        padding: 1rem 0;
     }
 
     .content-header h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
         color: #202020;
-        margin-bottom: 0.5rem;
+        margin-bottom: 0.25rem;
     }
 
     .content-header p {
@@ -43,27 +44,26 @@ include 'views/layout/header.php';
 
     .content-body {
         background: #fff;
-        padding: 2rem;
-        border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        min-height: 350px;
+        padding: 1.8rem;
+        border-radius: 14px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        min-height: 250px; 
+        width: 100%;
     }
+
 </style>
 
 <div class="main-container">
 
-    <!-- Sidebar yang sudah disendirikan -->
     <?php include 'views/layout/sidebar.php'; ?>
 
-    <!-- Area konten -->
     <main class="content-area">
         <div class="content-header">
             <h1>Dashboard Admin</h1>
-            <p>Selamat datang di halaman dashboard admin.</p>
         </div>
 
         <div class="content-body">
-            <p style="color: #666;">Area konten utama - silakan sesuaikan konten dashboard Anda.</p>
+            <p style="color: #666;">Selamat datang di halaman dashboard admin.</p>
         </div>
     </main>
 

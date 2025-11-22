@@ -14,18 +14,15 @@ class loginModel {
     
     // METHOD 1: Authenticate user
     public function authenticate($username, $password) {
-        $query = "SELECT * FROM " . $this->table . " WHERE username = :username LIMIT 1";
+        $query = "SELECT * FROM users WHERE username = :username LIMIT 1";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':username', $username);
+        $stmt->bindParam(":username", $username);
         $stmt->execute();
         
-        if ($stmt->rowCount() > 0) {
-            $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            // Verifikasi password (gunakan password_hash saat registrasi)
-            if (password_verify($password, $user['password'])) {
-                return $user;
-            }
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($user && password_verify($password, $user['password'])) {
+            return $user;
         }
         
         return false;
@@ -47,34 +44,18 @@ class loginModel {
             $query = "INSERT INTO " . $this->table . " (username, password, role) 
                     VALUES (:username, :password, :role)";
             
-            echo "Query: " . $query . "<br>";
-            
             $stmt = $this->conn->prepare($query);
             
-            // Hash password sebelum disimpan
             $hashedPassword = password_hash($data['password'], PASSWORD_DEFAULT);
             
-            echo "Hashed Password: " . $hashedPassword . "<br>";
-            
-            // Bind parameters
             $stmt->bindParam(":username", $data['username']);
             $stmt->bindParam(":password", $hashedPassword);
             $stmt->bindParam(":role", $data['role']);
             
-            $result = $stmt->execute();
-            
-            echo "Execute Result: " . ($result ? 'TRUE' : 'FALSE') . "<br>";
-            
-            if (!$result) {
-                echo "Error Info: <pre>";
-                print_r($stmt->errorInfo());
-                echo "</pre>";
-            }
-            
-            return $result;
+            return $stmt->execute();
             
         } catch (PDOException $e) {
-            echo "PDO Error: " . $e->getMessage() . "<br>";
+            error_log("Error creating user: " . $e->getMessage());
             return false;
         }
     }
