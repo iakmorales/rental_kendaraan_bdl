@@ -120,9 +120,24 @@ switch ($action) {
     
     // dashboard
     case 'dashboard':
+    requireLogin();
+    
+    $stmt1 = $db->query("SELECT * FROM mv_kendaraan_terpopuler");
+    $mv1 = $stmt1->fetch();
+    
+    $stmt2 = $db->query("SELECT * FROM mv_sewa_durasi_kendaraan");
+    $mv2 = $stmt2->fetchAll(PDO::FETCH_ASSOC);
+    
+    include 'views/dashboard.php';
+    break;
+
+    case 'refresh_dashboard':
         requireLogin();
-        $active = 'dashboard';
-        include 'views/dashboard.php';
+        $db->query("REFRESH MATERIALIZED VIEW mv_kendaraan_terpopuler");
+        $db->query("REFRESH MATERIALIZED VIEW mv_sewa_durasi_kendaraan");
+        $_SESSION['success'] = '✅ Data dashboard berhasil di-refresh!';
+        header('Location: index.php?action=dashboard');
+        exit();
         break;
     
    
