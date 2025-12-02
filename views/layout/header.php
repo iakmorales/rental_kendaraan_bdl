@@ -4,9 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Go Drive Admin</title>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-            integrity="sha512-pbFz1cAQYz4sVxqV5D8Zyx/+D5z+wec3s+sqXwVxLqS2Cj0Yw5Dfdd1q+o5hVH6UgM0G3jqm+DQ2nRrGnx1pRw=="
-            crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
             <style>
                 * {
                     margin: 0;
@@ -92,7 +90,7 @@
         <header>
             <div class="header-content">
                 <div class="logo-section">
-                    <div class="logo">🦊</div>
+                    <div class="logo"> <i class="fa-solid fa-user-tie"></i> </div>
                     <h2>Go Drive</h2>
                 </div>
                 <div class="user-section">

@@ -277,6 +277,114 @@ switch ($action) {
         exit();
         break;
 
+    
+    // pengembalian 
+    case 'pengembalian':
+        requireLogin();
+        $pengembalian = $pengembalianModel->getAllPengembalian();
+        include 'views/pengembalian/pengembalian_list.php';
+        break;
+
+    case 'pengembalian_create':
+        requireLogin();
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
+            $rental_id = $_POST['rental_id'];
+            $tanggal_kembali_aktual = $_POST['tanggal_kembali_aktual'];
+            $kondisi_akhir = $_POST['kondisi_akhir'];
+            $denda_tambahan = $_POST['denda_tambahan'] ?? 0;
+            
+            // Validasi
+            if (empty($rental_id) || empty($tanggal_kembali_aktual) || empty($kondisi_akhir)) {
+                $_SESSION['error'] = '❌ Semua field wajib diisi!';
+                $_SESSION['old_data'] = $_POST;
+                header('Location: index.php?action=pengembalian_create');
+                exit();
+            }
+            
+            // Cek apakah rental sudah dikembalikan
+            if ($pengembalianModel->isRentalReturned($rental_id)) {
+                $_SESSION['error'] = '❌ Rental ini sudah dikembalikan sebelumnya!';
+                $_SESSION['old_data'] = $_POST;
+                header('Location: index.php?action=pengembalian_create');
+                exit();
+            }
+            
+            // Hitung keterlambatan dan denda
+            $keterlambatan = $pengembalianModel->hitungKeterlambatan($rental_id, $tanggal_kembali_aktual);
+            $denda_hitung = $pengembalianModel->hitungDenda($rental_id, $tanggal_kembali_aktual);
+            
+            $telat_jam = $keterlambatan['telat'] ?? 0;
+            $denda_keterlambatan = $denda_hitung['denda'] ?? 0;
+            $total_denda = $denda_keterlambatan + $denda_tambahan;
+            
+            // Simpan data ke session untuk ditampilkan di form
+            $_SESSION['old_data'] = $_POST;
+            $_SESSION['old_data']['calculation'] = [
+                'keterlambatan_jam' => $telat_jam,
+                'denda_keterlambatan' => $denda_keterlambatan,
+                'denda_tambahan' => $denda_tambahan,
+                'total_denda' => $total_denda
+            ];
+            
+            // Proses penyimpanan langsung
+            $pengembalian_data = [
+                'rental_id' => $rental_id,
+                'tanggal_kembali_aktual' => $tanggal_kembali_aktual,
+                'denda' => $total_denda,
+                'kondisi_akhir' => $kondisi_akhir
+            ];
+            
+            // Mulai transaksi
+            $db->beginTransaction();
+            
+            try {
+                // 1. Simpan pengembalian
+                if ($pengembalianModel->createPengembalian($pengembalian_data)) {
+                    // 2. Update status rental
+                    if ($pengembalianModel->updateRentalStatus($rental_id)) {
+                        $db->commit();
+                        
+                        // Hapus session data
+                        unset($_SESSION['old_data']);
+                        
+                        $_SESSION['success'] = '✅ Pengembalian berhasil diproses!';
+                        if ($telat_jam > 0) {
+                            $_SESSION['success'] .= " Terlambat: $telat_jam jam. Denda: Rp " . number_format($total_denda, 0, ',', '.');
+                        }
+                        
+                        header("Location: index.php?action=pengembalian&message=created");
+                        exit();
+                    } else {
+                        throw new Exception("Gagal update status rental");
+                    }
+                } else {
+                    throw new Exception("Gagal menyimpan pengembalian");
+                }
+            } catch (Exception $e) {
+                $db->rollBack();
+                $_SESSION['error'] = '❌ Gagal memproses pengembalian: ' . $e->getMessage();
+                header('Location: index.php?action=pengembalian_create');
+                exit();
+            }
+        }
+        
+        include 'views/pengembalian/pengembalian_form.php';
+        break;
+
+    case 'pengembalian_delete':
+        requireLogin();
+        $id = $_GET['id'];
+        
+        if ($pengembalianModel->deletePengembalian($id)) {
+            $_SESSION['success'] = '✅ Data pengembalian berhasil dihapus!';
+            header("Location: index.php?action=pengembalian&message=deleted");
+        } else {
+            $_SESSION['error'] = '❌ Gagal menghapus data pengembalian!';
+            header("Location: index.php?action=pengembalian");
+        }
+        exit();
+        break;
 
     // default
     default:

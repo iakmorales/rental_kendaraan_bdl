@@ -1,3 +1,4 @@
+
 <?php
 /**
  * FILE: models/pengembalianModel.php
@@ -14,20 +15,20 @@ class pengembalianModel {
 
     // METHOD 1: Read semua pengembalian
     public function getAllPengembalian() {
-        $query = "SELECT * FROM " . $this->table . " ORDER BY id DESC";
+        $query = "SELECT * FROM " . $this->table . " ORDER BY pengembalian_id DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
     }
 
-    // METHOD 2: Create Pelanggan baru
+    // METHOD 2: Create pengembalian baru (ID dari sequence)
     public function createPengembalian($data) {
-        $query = "INSERT INTO " . $this->table . " (pengembalian_id, rental_id, tanggal_kembali_aktual, denda, kondisi_akhir) VALUES (:pengembalian_id, :rental_id, :tanggal_kembali_aktual, :denda, :kondisi_akhir)";
+        $query = "INSERT INTO " . $this->table . " 
+                  (rental_id, tanggal_kembali_aktual, denda, kondisi_akhir) 
+                  VALUES (:rental_id, :tanggal_kembali_aktual, :denda, :kondisi_akhir)";
 
         $stmt = $this->conn->prepare($query);
 
-        // Bind parameters untuk keamanan (mencegah SQL injection)
-        $stmt->bindParam(":pengembalian_id", $data['pengembalian_id']);
         $stmt->bindParam(":rental_id", $data['rental_id']);
         $stmt->bindParam(":tanggal_kembali_aktual", $data['tanggal_kembali_aktual']);
         $stmt->bindParam(":denda", $data['denda']);
@@ -61,6 +62,36 @@ class pengembalianModel {
         $query = "DELETE FROM " . $this->table . " WHERE pengembalian_id = :pengembalian_id";
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(":pengembalian_id", $id);
+        return $stmt->execute();
+    }
+
+    // METHOD 6: Cek apakah rental sudah dikembalikan
+    public function isRentalReturned($rental_id) {
+        $query = "SELECT COUNT(*) as count FROM " . $this->table . " WHERE rental_id = :rental_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":rental_id", $rental_id);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['count'] > 0;
+    }
+
+    // METHOD 7: Get rental aktif (belum dikembalikan)
+    public function getActiveRentals() {
+        $query = "SELECT r.rental_id, r.tanggal_selesai_rencana 
+                  FROM Rental r 
+                  WHERE r.status_rental = 'Aktif' 
+                  AND r.rental_id NOT IN (SELECT rental_id FROM Pengembalian)
+                  ORDER BY r.rental_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->execute();
+        return $stmt;
+    }
+
+    // METHOD 8: Update status rental setelah pengembalian
+    public function updateRentalStatus($rental_id) {
+        $query = "UPDATE Rental SET status_rental = 'Selesai' WHERE rental_id = :rental_id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(":rental_id", $rental_id);
         return $stmt->execute();
     }
 }

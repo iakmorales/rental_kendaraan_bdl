@@ -1,7 +1,8 @@
+
 <?php
 /**
- * FILE: views/users/users_list.php
- * FUNGSI: Menampilkan daftar semua users dalam bentuk tabel
+ * FILE: views/pengembalian/pengembalian_list.php
+ * FUNGSI: Menampilkan daftar semua pengembalian kendaraan
  */
 include 'views/layout/header.php';
 ?>
@@ -31,9 +32,6 @@ include 'views/layout/header.php';
         margin: 0;
         font-weight: 700;
         color: #202020;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
     }
 
     .btn {
@@ -55,27 +53,14 @@ include 'views/layout/header.php';
     .btn-primary:hover {
         background: #0069d9;
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,123,255,0.3);
-    }
-
-    .btn-edit {
-        background: #ffc107;
-        color: #000;
-        padding: 0.5rem 1.2rem;
-        font-size: 0.9rem;
-        font-weight: 600;
-    }
-
-    .btn-edit:hover {
-        background: #e0a800;
+        box-shadow: 0 4px 8px rgba(40,167,69,0.3);
     }
 
     .btn-delete {
         background: #dc3545;
         color: white;
-        padding: 0.5rem 1.2rem;
+        padding: 0.4rem 0.9rem;
         font-size: 0.9rem;
-        font-weight: 600;
     }
 
     .btn-delete:hover {
@@ -105,19 +90,18 @@ include 'views/layout/header.php';
     }
 
     .data-table th {
-        background: linear-gradient(135deg, #2c2c2c 0%, #3a3a3a 100%);
+        background: linear-gradient(135deg, #202020 0%, #333533 100%);
         color: white;
-        padding: 1.2rem 1rem;
+        padding: 1rem;
         text-align: left;
         font-weight: 600;
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 
     .data-table td {
-        padding: 1.5rem 1rem;
+        padding: 1rem;
         border-bottom: 1px solid #e9ecef;
         color: #495057;
-        font-size: 0.95rem;
     }
 
     .data-table tbody tr {
@@ -134,7 +118,7 @@ include 'views/layout/header.php';
 
     .action-buttons {
         display: flex;
-        gap: 0.6rem;
+        gap: 0.5rem;
     }
 
     .stats-footer {
@@ -150,6 +134,29 @@ include 'views/layout/header.php';
 
     .stats-footer strong {
         color: #202020;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .badge-success {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    .badge-danger {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .badge-warning {
+        background: #fff3cd;
+        color: #856404;
     }
 
     .empty-state {
@@ -191,10 +198,10 @@ include 'views/layout/header.php';
     <div class="main-container">
         <div class="content-header">
             <h2>
-                <i class="fa-solid fa-file"></i> Daftar Users
+                <i class="fa-solid fa-file"></i> Daftar Pengembalian Kendaraan
             </h2>
-            <a href="index.php?action=users_create" class="btn btn-primary">
-                <i class="fa-solid fa-plus"></i> Tambah Users
+            <a href="index.php?action=pengembalian_create" class="btn btn-primary">
+                <i class="fa-solid fa-plus"></i> Proses Pengembalian Baru
             </a>
         </div>
 
@@ -202,9 +209,8 @@ include 'views/layout/header.php';
             <div class="alert">
                 <?php
                 $messages = [
-                    'created' => '✅ Users berhasil ditambahkan!',
-                    'updated' => '✅ Data users berhasil diupdate!',
-                    'deleted' => '✅ Users berhasil dihapus!'
+                    'created' => '✅ Pengembalian berhasil diproses!',
+                    'deleted' => '✅ Data pengembalian berhasil dihapus!'
                 ];
                 echo $messages[$_GET['message']] ?? '✅ Operasi berhasil!';
                 ?>
@@ -215,35 +221,53 @@ include 'views/layout/header.php';
             <table class="data-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Username</th>
-                        <th>Roles</th>
+                        <th>ID Pengembalian</th>
+                        <th>ID Rental</th>
+                        <th>Tanggal Kembali Aktual</th>
+                        <th>Denda</th>
+                        <th>Kondisi Akhir</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php if ($users->rowCount() > 0): ?>
-                        <?php while ($row = $users->fetch(PDO::FETCH_ASSOC)): ?>
+                    <?php if ($pengembalian->rowCount() > 0): ?>
+                        <?php while ($row = $pengembalian->fetch(PDO::FETCH_ASSOC)): ?>
+                            <?php
+                            $denda_badge = $row['denda'] > 0 ? 'badge-danger' : 'badge-success';
+                            $denda_text = $row['denda'] > 0 ? 'Rp ' . number_format($row['denda'], 0, ',', '.') : 'Tidak ada';
+                            ?>
                             <tr>
-                                <td><strong><?php echo htmlspecialchars($row['id']); ?></strong></td>
-                                <td><strong><?php echo htmlspecialchars($row['username']); ?></strong></td>
-                                <td><?= ucfirst($row['role'] ?? ''); ?></td>
+                                <td><strong><?php echo htmlspecialchars($row['pengembalian_id']); ?></strong></td>
+                                <td><strong><?php echo htmlspecialchars($row['rental_id']); ?></strong></td>
+                                <td><?php echo date('d-m-Y H:i', strtotime($row['tanggal_kembali_aktual'])); ?></td>
+                                <td>
+                                    <span class="badge <?php echo $denda_badge; ?>">
+                                        <?php echo $denda_text; ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <?php 
+                                    $kondisi = htmlspecialchars($row['kondisi_akhir'] ?? '-');
+                                    echo strlen($kondisi) > 50 ? substr($kondisi, 0, 50) . '...' : $kondisi;
+                                    ?>
+                                </td>
                                 <td>
                                     <div class="action-buttons">
-                                        <a href="index.php?action=users_edit&id=<?php echo $row['id']; ?>" 
-                                           class="btn btn-edit">Edit</a>
-                                        <a href="index.php?action=users_delete&id=<?php echo $row['id']; ?>" 
-                                           class="btn btn-delete" 
-                                           onclick="return confirm('Yakin ingin menghapus users ini?')">Hapus</a>
+                                        <a href="index.php?action=pengembalian_delete&id=<?php echo $row['pengembalian_id']; ?>" 
+                                        class="btn btn-delete" 
+                                        onclick="return confirm('Yakin ingin menghapus data pengembalian ini?')">
+                                            Hapus
+                                        </a>
                                     </div>
                                 </td>
                             </tr>
                         <?php endwhile; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="4">
+                            <td colspan="6">
                                 <div class="empty-state">
-                                    <p>Belum ada data users.</p>
+                                    <p>Belum ada data pengembalian.</p>
+                                    <a href="index.php?action=pengembalian_create" class="btn btn-primary">Proses Pengembalian Pertama</a>
                                 </div>
                             </td>
                         </tr>
@@ -253,8 +277,10 @@ include 'views/layout/header.php';
         </div>
 
         <div class="stats-footer">
-            <strong><i class="fa-solid fa-chart-column"></i>  Total Data: </strong>
-            <span><?php echo $users->rowCount(); ?> users terdaftar</span>
+            <strong>
+                <i class="fa-solid fa-chart-column"></i> Total Data:
+            </strong>
+            <span><?php echo $pengembalian->rowCount(); ?> pengembalian tercatat</span>
         </div>
     </div>
 </div>

@@ -184,9 +184,11 @@ include 'views/layout/header.php';
 
     <div class="main-container">
         <div class="content-header">
-            <h2>📋 Daftar Sopir</h2>
+            <h2>
+                <i class="fa-solid fa-file"></i> Daftar Sopir
+            </h2>
             <a href="index.php?action=sopir_create" class="btn btn-primary">
-                + Tambah Sopir Baru
+                <i class="fa-solid fa-plus"></i>  Tambah Sopir Baru
             </a>
         </div>
 
@@ -252,7 +254,9 @@ include 'views/layout/header.php';
         </div>
 
         <div class="stats-footer">
-            <strong>📊 Total Data:</strong>
+            <strong> 
+                <i class="fa-solid fa-chart-column"></i>  Total Data:
+            </strong>
             <span><?php echo $sopir->rowCount(); ?> sopir terdaftar</span>
         </div>
     </div>

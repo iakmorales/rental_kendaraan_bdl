@@ -238,10 +238,14 @@ if (!empty($oldData)) {
 
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">
-                        <?php echo $isEdit ? '💾 Update Data' : '➕ Simpan Data'; ?>
+                        <?php if ($isEdit): ?>
+                            <i class="fa-solid fa-floppy-disk"></i> Update Data 
+                        <?php else: ?>
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan Data
+                        <?php endif; ?>
                     </button>
                     <a href="index.php?action=sopir" class="btn btn-secondary">
-                        ← Kembali
+                        <i class="fa-solid fa-arrow-left"></i> Kembali
                     </a>
                 </div>
             </form>
