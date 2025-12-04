@@ -5,35 +5,37 @@
  */
 class tipeKendaraanModel {
     private $conn;
-    private $table = 'Tipe_Kendaraan';
+    private $table = 'tipe_kendaraan';
 
-    // constructor
     public function __construct($db) {
         $this->conn = $db;
     }
 
-     // METHOD 1: Read semua tipe kendaraan
+    // 1. READ ALL
     public function getAllTipeKendaraan() {
-        $query = "SELECT * FROM " . $this->table . " ORDER BY id DESC";
+        $query = "SELECT * FROM " . $this->table . " ORDER BY tipe_id ASC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;
     }
 
-    // METHOD 2: Create tipe kendaraan baru
+    // 2. CREATE
     public function createTipeKendaraan($data) {
-        $query = "INSERT INTO " . $this->table . " (nama_tipe, deskripsi) VALUES (:tipe_id, :nama_tipe, :deskripsi)";
+        $query = "INSERT INTO " . $this->table . " (nama_tipe, deskripsi) VALUES (:nama_tipe, :deskripsi)";
 
         $stmt = $this->conn->prepare($query);
 
-        // Bind parameters untuk keamanan (mencegah SQL injection)
-        $stmt->bindParam(":tipe_id", $data['tipe_id']);
-        $stmt->bindParam(":nama_tipe", $data['nama_tipe']);
-        $stmt->bindParam(":deskripsi", $data['deskripsi']);
+        // Bersihkan data
+        $nama_tipe = htmlspecialchars(strip_tags($data['nama_tipe']));
+        $deskripsi = htmlspecialchars(strip_tags($data['deskripsi']));
+
+        $stmt->bindParam(":nama_tipe", $nama_tipe);
+        $stmt->bindParam(":deskripsi", $deskripsi);
         
         return $stmt->execute();
     }
 
+    // 3. GET BY ID
     public function getTipeKendaraanById($id) {
         $query = "SELECT * FROM " . $this->table . " WHERE tipe_id = :tipe_id";
         $stmt = $this->conn->prepare($query);
@@ -42,20 +44,23 @@ class tipeKendaraanModel {
         return $stmt;
     }
 
+    // 4. UPDATE
     public function updateTipeKendaraan($id, $data) {
         $query = "UPDATE " . $this->table . " SET nama_tipe = :nama_tipe, deskripsi = :deskripsi WHERE tipe_id = :tipe_id";
 
         $stmt = $this->conn->prepare($query);
 
-        // Bind parameters untuk keamanan (mencegah SQL injection)
-        $stmt->bindParam(":nama_tipe", $data['nama_tipe']);
-        $stmt->bindParam(":deskripsi", $data['deskripsi']);
+        $nama_tipe = htmlspecialchars(strip_tags($data['nama_tipe']));
+        $deskripsi = htmlspecialchars(strip_tags($data['deskripsi']));
+
+        $stmt->bindParam(":nama_tipe", $nama_tipe);
+        $stmt->bindParam(":deskripsi", $deskripsi);
         $stmt->bindParam(":tipe_id", $id);
         
         return $stmt->execute();
     }
 
-    // METHOD 4: Delete tipe berdasarkan ID
+    // 5. DELETE
     public function deleteTipeKendaraan($id) {
         $query = "DELETE FROM " . $this->table . " WHERE tipe_id = :tipe_id";
         $stmt = $this->conn->prepare($query);

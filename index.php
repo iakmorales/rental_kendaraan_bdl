@@ -140,7 +140,110 @@ switch ($action) {
         exit();
         break;
     
-   
+    //tipe kendaraan
+    case 'tipe_kendaraan':
+        requireLogin();
+        $tipeList = $tipeKendaraanModel->getAllTipeKendaraan();
+        include 'views/tipe_kendaraan/tipe_list.php';
+        break;
+
+    // 2. CREATE
+    case 'tipe_kendaraan_create':
+        requireLogin();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'nama_tipe' => $_POST['nama_tipe'],
+                'deskripsi' => $_POST['deskripsi']
+            ];
+
+            try {
+                if ($tipeKendaraanModel->createTipeKendaraan($data)) {
+                    $_SESSION['success'] = '✅ Tipe kendaraan berhasil ditambahkan!';
+                    header("Location: index.php?action=tipe_kendaraan&message=created");
+                    exit();
+                } else {
+                    $_SESSION['error'] = '❌ Gagal menambah tipe kendaraan.';
+                    $_SESSION['old_data'] = $_POST;
+                }
+            } catch (PDOException $e) {
+                // Tangkap error jika nama tipe duplikat (Unique Constraint)
+                if (strpos($e->getMessage(), 'unique constraint') !== false) {
+                    $_SESSION['error'] = '❌ Nama tipe sudah ada! Gunakan nama lain.';
+                } else {
+                    $_SESSION['error'] = '❌ Error Database: ' . $e->getMessage();
+                }
+                $_SESSION['old_data'] = $_POST;
+            }
+        }
+        include 'views/tipe_kendaraan/tipe_form.php';
+        break;
+
+    // 3. EDIT
+    case 'tipe_kendaraan_edit':
+        requireLogin();
+        $id = $_GET['id'];
+        $tipe = $tipeKendaraanModel->getTipeKendaraanById($id)->fetch(PDO::FETCH_ASSOC);
+
+        if (!$tipe) {
+            $_SESSION['error'] = 'Data tipe kendaraan tidak ditemukan!';
+            header("Location: index.php?action=tipe_kendaraan");
+            exit();
+        }
+        include 'views/tipe_kendaraan/tipe_form.php';
+        break;
+
+    // 4. UPDATE
+    case 'tipe_kendaraan_update':
+        requireLogin();
+        $id = $_GET['id'];
+        
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                'nama_tipe' => $_POST['nama_tipe'],
+                'deskripsi' => $_POST['deskripsi']
+            ];
+
+            try {
+                if ($tipeKendaraanModel->updateTipeKendaraan($id, $data)) {
+                    $_SESSION['success'] = '✅ Data tipe kendaraan berhasil diperbarui!';
+                    header("Location: index.php?action=tipe_kendaraan&message=updated");
+                    exit();
+                } else {
+                    $_SESSION['error'] = '❌ Gagal update tipe kendaraan.';
+                }
+            } catch (PDOException $e) {
+                if (strpos($e->getMessage(), 'unique constraint') !== false) {
+                    $_SESSION['error'] = '❌ Nama tipe sudah ada!';
+                } else {
+                    $_SESSION['error'] = '❌ Error: ' . $e->getMessage();
+                }
+            }
+            $_SESSION['old_data'] = $_POST;
+            header("Location: index.php?action=tipe_kendaraan_edit&id=$id");
+            exit();
+        }
+        break;
+
+    // 5. DELETE
+    case 'tipe_kendaraan_delete':
+        requireLogin();
+        $id = $_GET['id'];
+        try {
+            if ($tipeKendaraanModel->deleteTipeKendaraan($id)) {
+                $_SESSION['success'] = '✅ Tipe kendaraan berhasil dihapus!';
+                header("Location: index.php?action=tipe_kendaraan&message=deleted");
+            } else {
+                $_SESSION['error'] = '❌ Gagal menghapus tipe kendaraan!';
+                header("Location: index.php?action=tipe_kendaraan");
+            }
+        } catch (PDOException $e) {
+            // Error Foreign Key (Masih ada mobil dengan tipe ini)
+            $_SESSION['error'] = '❌ Tidak bisa menghapus tipe ini karena masih digunakan oleh data Kendaraan.';
+            header("Location: index.php?action=tipe_kendaraan");
+        }
+        exit();
+        break;
+
     // sopir 
     case 'sopir':
         requireLogin();
