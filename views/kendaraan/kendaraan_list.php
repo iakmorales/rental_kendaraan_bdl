@@ -203,6 +203,75 @@ include 'views/layout/header.php';
             flex-direction: column;
         }
     }
+
+    /* Responsiveness */
+    @media (max-width: 1024px) {
+        .main-container {
+            margin-left: 0;
+        }
+        
+        .page-wrapper {
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 768px) {
+    .main-container {
+        margin-left: 0;
+        padding: 1rem;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .main-container {
+            padding: 1rem;
+        }
+        
+        .content-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .data-table {
+            font-size: 0.85rem;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 0.7rem 0.5rem;
+        }
+        
+        .action-buttons {
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        
+        .btn-edit, .btn-delete {
+            width: 100%;
+            text-align: center;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .main-container {
+            padding: 0.8rem;
+        }
+        
+        .stats-footer {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        .data-table {
+            min-width: 600px;
+        }
+    }
 </style>
 
 <div class="page-wrapper">

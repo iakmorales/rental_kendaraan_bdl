@@ -153,6 +153,56 @@ if (isset($_SESSION['old_data'])) unset($_SESSION['old_data']);
             width: 100%;
         }
     }
+
+    /* Responsiveness */
+    @media (max-width: 1024px) {
+        .main-container {
+            margin-left: 0;
+        }
+        .page-wrapper {
+            flex-direction: column;
+        }
+    }
+
+    @media (max-width: 768px) {
+    .main-container {
+        margin-left: 0;
+        padding: 1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-container {
+            padding: 1rem;
+        }
+        
+        .form-container {
+            padding: 1.5rem;
+        }
+        
+        .form-actions {
+            flex-direction: column;
+        }
+        
+        .btn {
+            width: 100%;
+            margin-bottom: 0.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .main-container {
+            padding: 0.8rem;
+        }
+        
+        .form-container {
+            padding: 1rem;
+        }
+        
+        h2 {
+            font-size: 1.3rem;
+        }
+    }
 </style>
 
 <div class="page-wrapper">

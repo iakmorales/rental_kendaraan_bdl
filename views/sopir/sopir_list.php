@@ -177,6 +177,63 @@ include 'views/layout/header.php';
             padding: 0.7rem;
         }
     }
+
+    /* Responsiveness */
+    @media (max-width: 1024px) {
+        .main-container {
+            margin-left: 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+    .main-container {
+        margin-left: 0;
+        padding: 1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-container {
+            padding: 1rem;
+        }
+        
+        .content-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        .data-table {
+            min-width: 700px;
+        }
+        
+        .data-table th,
+        .data-table td {
+            padding: 0.8rem 0.5rem;
+            font-size: 0.9rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .main-container {
+            padding: 0.8rem;
+        }
+        
+        .stats-footer {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            text-align: center;
+        }
+    }
 </style>
 
 <div class="page-wrapper">

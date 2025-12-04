@@ -172,6 +172,45 @@
                     width: 70%;
                 }
             }
+
+            /* Responsiveness */
+            @media (max-width: 768px) {
+                .wrapper {
+                    flex-direction: column;
+                    width: 95%;
+                }
+                
+                .left-side, .right-side {
+                    width: 100%;
+                    padding: 30px;
+                }
+                
+                .left-side img {
+                    width: 70%;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .wrapper {
+                    border-radius: 10px;
+                }
+                
+                .left-side, .right-side {
+                    padding: 20px;
+                }
+                
+                .left-side h2 {
+                    font-size: 1.2rem;
+                }
+                
+                .right-side h1 {
+                    font-size: 1.5rem;
+                }
+                
+                .btn-login {
+                    font-size: 1rem;
+                }
+            }
         </style>
     </head>
 

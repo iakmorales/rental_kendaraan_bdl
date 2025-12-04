@@ -331,6 +331,70 @@ include 'views/layout/header.php';
             justify-content: flex-start;
         }
     }
+
+    /* Responsiveness */
+    @media (max-width: 1024px) {
+        .main-container {
+            margin-left: 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+    .main-container {
+        margin-left: 0;
+        padding: 1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-container {
+            padding: 1rem;
+        }
+        
+        .search-form {
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .search-group {
+            min-width: 100%;
+        }
+        
+        .filter-group {
+            width: 100%;
+            justify-content: space-between;
+        }
+        
+        .filter-select {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        .data-table {
+            min-width: 900px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .main-container {
+            padding: 0.8rem;
+        }
+        
+        .stats-footer {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        
+        .pagination {
+            justify-content: flex-start;
+            overflow-x: auto;
+        }
+    }
 </style>
 
 <div class="page-wrapper">

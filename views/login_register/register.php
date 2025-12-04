@@ -185,6 +185,40 @@
                     font-size: 2em;
                 }
             }
+
+            /* Responsiveness */
+            @media (max-width: 768px) {
+                .container {
+                    flex-direction: column;
+                }
+                
+                .welcome-section, .form-section {
+                    width: 100%;
+                    padding: 40px 30px;
+                }
+                
+                .welcome-section h1 {
+                    font-size: 2em;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .welcome-section, .form-section {
+                    padding: 30px 20px;
+                }
+                
+                .welcome-section h1 {
+                    font-size: 1.5em;
+                }
+                
+                .form-section h2 {
+                    font-size: 1.5em;
+                }
+                
+                .btn-submit {
+                    font-size: 1rem;
+                }
+            }
         </style>
     </head>
     <body>
