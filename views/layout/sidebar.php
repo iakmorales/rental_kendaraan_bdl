@@ -90,7 +90,7 @@
         </li>
 
         <li class="menu-item">
-            <a href="index.php?action=penyewa" class="<?= $current=='penyewa'?'active':'' ?>">
+            <a href="index.php?action=pelanggan" class="<?= $current=='pelanggan'?'active':'' ?>">
                 <span class="menu-icon"> <i class="fa-solid fa-users"></i> </span>
                 <span>Penyewa</span>
             </a>
