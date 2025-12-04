@@ -12,6 +12,7 @@ require_once 'models/loginModel.php';
 require_once 'models/usersModel.php';
 require_once 'models/adminToolsModel.php';
 
+
 $database = new Database();
 $db = $database->getConnection();
 $kendaraanModel = new KendaraanModel($db);
@@ -829,6 +830,12 @@ switch ($action) {
             }
         }
         include 'views/tools/transaction.php';
+        break;
+        
+    //rental+sopir+pengembalian
+    case 'laporan_rental_pengembalian':
+        requireLogin();
+        include 'views/rental_pengembalian/laporan_rental_pengembalian.php';
         break;
 
     // default

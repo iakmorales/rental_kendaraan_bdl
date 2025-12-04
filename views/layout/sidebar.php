@@ -104,6 +104,13 @@
             </a>
         </li>
 
+         <li class="menu-item">
+            <a href="index.php?action=laporan_rental_pengembalian" class="<?= $current=='laporan_rental_pengembalian'?'active':'' ?>" >
+                <span class="menu-icon"> <i class="fa-solid fa-car-side"></i> </span>
+                <span>Laporan Rental dan Pengembalian</span>
+            </a>
+        </li>
+
         <li class="menu-header">Transaksi</li>
         <li class="menu-item">
             <a href="index.php?action=rental" class="<?= $current=='rental'?'active':'' ?>">
@@ -120,7 +127,6 @@
             </a>
         </li>
 
-        
         <li class="menu-header">Admin Tools</li>
          <li class="menu-item">
             <a href="index.php?action=tools_indexing" class="<?= $current=='tools_indexing'?'active':'' ?>">
