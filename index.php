@@ -720,6 +720,95 @@ switch ($action) {
         exit();
         break;
 
+    // kendaraan 
+    case 'kendaraan':
+        requireLogin();
+        $kendaraan = $kendaraanModel->getAllKendaraan();
+        include 'views/kendaraan/kendaraan_list.php';
+        break;
+
+    case 'kendaraan_create':
+        requireLogin();
+        if ($_POST) {
+            $plat_nomor = trim($_POST['plat_nomor']);
+            
+            if ($kendaraanModel->isPlatExists($plat_nomor)) {
+                $_SESSION['error'] = '❌ Plat nomor sudah terdaftar! Gunakan plat nomor lain.';
+                $_SESSION['old_data'] = $_POST; 
+            } else {
+                $data = [
+                    'kendaraan_id' => $_POST['kendaraan_id'],
+                    'tipe_id' => $_POST['tipe_id'],
+                    'plat_nomor' => $plat_nomor,
+                    'merk' => $_POST['merk'],
+                    'model' => $_POST['model'],
+                    'tahun' => !empty($_POST['tahun']) ? $_POST['tahun'] : null,
+                    'harga_sewa_per_hari' => $_POST['harga_sewa_per_hari'],
+                    'status_ketersediaan' => $_POST['status_ketersediaan']
+                ];
+
+                if ($kendaraanModel->createKendaraan($data)) {
+                    $_SESSION['success'] = '✅ Kendaraan berhasil ditambahkan!';
+                    header("Location: index.php?action=kendaraan&message=created");
+                    exit();
+                } else {
+                    $_SESSION['error'] = "❌ Gagal menambah kendaraan";
+                    $_SESSION['old_data'] = $_POST;
+                }
+            }
+        }
+        include 'views/kendaraan/kendaraan_form.php';
+        break;
+
+    case 'kendaraan_edit':
+        requireLogin();
+        $id = $_GET['id'];
+
+        if ($_POST) {
+            $plat_nomor = trim($_POST['plat_nomor']);
+            
+            if ($kendaraanModel->isPlatExists($plat_nomor, $id)) {
+                $_SESSION['error'] = '❌ Plat nomor sudah digunakan kendaraan lain!';
+                $_SESSION['old_data'] = $_POST;
+            } else {
+                $data = [
+                    'tipe_id' => $_POST['tipe_id'],
+                    'plat_nomor' => $plat_nomor,
+                    'merk' => $_POST['merk'],
+                    'model' => $_POST['model'],
+                    'tahun' => !empty($_POST['tahun']) ? $_POST['tahun'] : null,
+                    'harga_sewa_per_hari' => $_POST['harga_sewa_per_hari'],
+                    'status_ketersediaan' => $_POST['status_ketersediaan']
+                ];
+
+                if ($kendaraanModel->updateKendaraan($id, $data)) {
+                    $_SESSION['success'] = '✅ Data kendaraan berhasil diupdate!';
+                    header("Location: index.php?action=kendaraan&message=updated");
+                    exit();
+                } else {
+                    $_SESSION['error'] = "❌ Gagal mengupdate kendaraan";
+                    $_SESSION['old_data'] = $_POST;
+                }
+            }
+        }
+
+        $kendaraan = $kendaraanModel->getKendaraanById($id);
+        include 'views/kendaraan/kendaraan_form.php';
+        break;
+
+    case 'kendaraan_delete':
+        requireLogin();
+        $id = $_GET['id'];
+        if ($kendaraanModel->deleteKendaraan($id)) {
+            $_SESSION['success'] = 'Kendaraan berhasil dihapus!';
+            header("Location: index.php?action=kendaraan&message=deleted");
+        } else {
+            $_SESSION['error'] = 'Gagal menghapus kendaraan! Mungkin masih terkait dengan data rental.';
+            header("Location: index.php?action=kendaraan&message=delete_error");
+        }
+        exit();
+        break;
+
     // default
     default:
         header('Location: index.php?action=login');
