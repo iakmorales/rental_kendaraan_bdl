@@ -10,6 +10,7 @@ require_once 'models/rentalModel.php';
 require_once 'models/pengembalianModel.php';
 require_once 'models/loginModel.php';
 require_once 'models/usersModel.php';
+require_once 'models/adminToolsModel.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -21,6 +22,7 @@ $rentalModel = new RentalModel($db);
 $pengembalianModel = new PengembalianModel($db);
 $loginModel = new LoginModel($db);
 $usersModel = new UsersModel($db);
+$adminToolsModel = new adminToolsModel($db);
 
 $action = isset($_GET['action']) ? $_GET['action'] : 'dashboard';
 
@@ -807,6 +809,26 @@ switch ($action) {
             header("Location: index.php?action=kendaraan&message=delete_error");
         }
         exit();
+        break;
+    
+    case 'tools_indexing':
+        requireLogin();
+        $query = "SELECT * FROM Rental WHERE status_rental = 'Aktif'";
+        $results = $adminToolsModel->getExplainAnalyze($query);
+        include 'views/tools/indexing.php';
+        break;
+
+    case 'tools_transaction':
+        requireLogin();
+        $simulation = null;
+        if (isset($_POST['test_type'])) {
+            if ($_POST['test_type'] == 'commit') {
+                $simulation = $adminToolsModel->simulasiTransaksiSukses();
+            } elseif ($_POST['test_type'] == 'rollback') {
+                $simulation = $adminToolsModel->simulasiTransaksiRollback();
+            }
+        }
+        include 'views/tools/transaction.php';
         break;
 
     // default

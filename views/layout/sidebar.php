@@ -53,6 +53,14 @@
                 justify-content: center;
                 font-size: 1.2rem;
             }
+            .menu-header {
+                padding: 1.5rem 2rem 0.5rem;
+                font-size: 0.75rem;
+                font-weight: 700;
+                color: #aaa;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
         </style>
 
 <?php $current = isset($_GET['action']) ? $_GET['action'] : 'dashboard'; ?>
@@ -69,7 +77,7 @@
         <li class="menu-item">
             <a href="index.php?action=tipe_kendaraan" class="<?= $current=='tipe_kendaraan'?'active':'' ?>">
                 <span class="menu-icon"> <i class="fa-solid fa-motorcycle"></i>
- </span>
+                </span>
                 <span>Tipe Kendaraan</span>
             </a>
         </li>
@@ -84,7 +92,7 @@
         <li class="menu-item">
             <a href="index.php?action=sopir" class="<?= $current=='sopir'?'active':'' ?>">
                 <span class="menu-icon"> <i class="fa-solid fa-id-card"></i>
- </span>
+                </span>
                 <span>Sopir</span>
             </a>
         </li>
@@ -96,6 +104,7 @@
             </a>
         </li>
 
+        <li class="menu-header">Transaksi</li>
         <li class="menu-item">
             <a href="index.php?action=rental" class="<?= $current=='rental'?'active':'' ?>">
                 <span class="menu-icon"> <i class="fa-solid fa-pen-to-square"></i> </span>
@@ -106,11 +115,28 @@
         <li class="menu-item">
             <a href="index.php?action=pengembalian" class="<?= $current=='pengembalian'?'active':'' ?>">
                 <span class="menu-icon"> <i class="fa-solid fa-arrow-rotate-left"></i>
- </span>
+                </span>
                 <span>Pengembalian</span>
             </a>
         </li>
 
+        
+        <li class="menu-header">Admin Tools</li>
+         <li class="menu-item">
+            <a href="index.php?action=tools_indexing" class="<?= $current=='tools_indexing'?'active':'' ?>">
+                <span class="menu-icon"><i class="fa-solid fa-gauge-high"></i></span>
+                <span>Indexing Check</span>
+            </a>
+        </li>
+
+        <li class="menu-item">
+            <a href="index.php?action=tools_transaction" class="<?= $current=='tools_transaction'?'active':'' ?>">
+                <span class="menu-icon"><i class="fa-solid fa-database"></i></span>
+                <span>Transaction Test</span>
+            </a>
+        </li>
+        
+        <li class="menu-header">System</li>
         <li class="menu-item">
             <a href="index.php?action=users" class="<?= $current=='users'?'active':'' ?>">
                 <span class="menu-icon"> <i class="fa-solid fa-user"> </i></span>
@@ -124,5 +150,7 @@
                 <span>Logout</span>
             </a>
         </li>
+
+        
     </ul>
 </aside>
