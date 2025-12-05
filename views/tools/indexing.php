@@ -223,7 +223,7 @@
         </div>
 
         <p class="text-muted" style="margin-top: -1.5rem; margin-bottom: 2rem;">
-            Halaman ini mendemonstrasikan perbandingan performa query database <b>Sebelum</b> dan <b>Sesudah</b> penerapan Indexing.
+            Mendemonstrasikan perbandingan performa query database <b>Sebelum</b> dan <b>Sesudah</b> penerapan Indexing.
         </p>
 
         <!-- CARD FORM INPUT -->

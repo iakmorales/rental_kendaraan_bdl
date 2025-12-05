@@ -28,9 +28,8 @@ class adminToolsModel {
             case 'sim':
                 $indexName = "idx_rental_punya_sim";
                 $createSql = "CREATE INDEX IF NOT EXISTS idx_rental_punya_sim ON Pelanggan(punya_sim)";
-                // Konversi string 'true'/'false' ke boolean
                 $param = ($param === 'true' || $param === '1') ? 'true' : 'false';
-                $querySql = "SELECT * FROM Pelanggan WHERE punya_sim = $param"; // Boolean literal di Postgres aman
+                $querySql = "SELECT * FROM Pelanggan WHERE punya_sim = $param"; 
                 $result['query_used'] = "SELECT * FROM Pelanggan WHERE punya_sim = $param";
                 break;
 
@@ -39,7 +38,7 @@ class adminToolsModel {
                 $createSql = "CREATE INDEX IF NOT EXISTS idx_rental_status_aktif ON Rental(rental_id) WHERE status_rental = 'Aktif'";
                 $querySql = "SELECT * FROM Rental WHERE status_rental = 'Aktif'";
                 $result['query_used'] = "SELECT * FROM Rental WHERE status_rental = 'Aktif'";
-                $param = null; // Tidak butuh parameter input
+                $param = null; 
                 break;
                 
             default:
@@ -47,10 +46,10 @@ class adminToolsModel {
         }
 
         try {
-            // 1. PHASE 1: DROP INDEX (TEST LAMBAT)
+            
             $this->conn->exec("DROP INDEX IF EXISTS $indexName");
             
-            // Jalankan Explain Analyze
+            
             $stmt = $this->conn->prepare("EXPLAIN ANALYZE " . $querySql);
             if ($param !== null && $scenario !== 'sim') { 
                 $stmt->bindParam(':p', $param); 
@@ -59,10 +58,10 @@ class adminToolsModel {
             $result['without_index'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $result['time_without'] = $this->parseExecutionTime($result['without_index']);
 
-            // 2. PHASE 2: CREATE INDEX (TEST CEPAT)
+           
             $this->conn->exec($createSql);
             
-            // Jalankan Explain Analyze Lagi
+            
             $stmt = $this->conn->prepare("EXPLAIN ANALYZE " . $querySql);
             if ($param !== null && $scenario !== 'sim') { 
                 $stmt->bindParam(':p', $param); 
@@ -78,21 +77,20 @@ class adminToolsModel {
         return $result;
     }
 
-    // Helper: Parsing Waktu dari Teks PostgreSQL
+    
     private function parseExecutionTime($explainResult) {
         $text = "";
         foreach ($explainResult as $row) {
             $text .= implode(" ", $row); 
         }
 
-        // Cari pola "Execution Time: 0.045 ms"
+   
         if (preg_match('/Execution Time:\s+([\d\.]+)\s+ms/i', $text, $matches)) {
             return $matches[1] . " ms";
         }
         return "0.01 ms"; // Fallback
     }
 
-    // Helper: Ambil List Kendaraan untuk Dropdown
     public function getListKendaraanID() {
         $stmt = $this->conn->query("SELECT DISTINCT kendaraan_id FROM Rental LIMIT 20");
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
