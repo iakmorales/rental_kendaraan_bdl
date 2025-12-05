@@ -351,6 +351,13 @@ include 'views/layout/header.php';
                 </tbody>
             </table>
         </div>
+
+        <div class="stats-footer">
+            <strong> 
+                <i class="fa-solid fa-chart-column"></i>  Total Data:
+            </strong>
+            <span><?php echo $rentals->rowCount(); ?> Transaksi Rental</span>
+        </div>
     </div>
 </div>
 

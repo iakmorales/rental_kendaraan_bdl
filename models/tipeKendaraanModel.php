@@ -13,7 +13,7 @@ class tipeKendaraanModel {
 
     // 1. READ ALL
     public function getAllTipeKendaraan() {
-        $query = "SELECT * FROM " . $this->table . " ORDER BY tipe_id ASC";
+        $query = "SELECT * FROM " . $this->table . " ORDER BY tipe_id DESC";
         $stmt = $this->conn->prepare($query);
         $stmt->execute();
         return $stmt;

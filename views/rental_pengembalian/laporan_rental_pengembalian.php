@@ -465,7 +465,7 @@ include 'views/layout/header.php';
                             $status_class = str_replace(' ', '_', strtolower($status));
                         ?>
                             <tr>
-                                <td><strong>#<?php echo htmlspecialchars($row['ID Rental']); ?></strong></td>
+                                <td><strong><?php echo htmlspecialchars($row['ID Rental']); ?></strong></td>
                                 <td><?php echo htmlspecialchars($row['Nama Pelanggan']); ?></td>
                                 <td><?php echo htmlspecialchars($row['Merek Mobil']); ?></td>
                                 <td><?php echo date('d/m/Y', strtotime($row['Tanggal Mulai'])); ?></td>

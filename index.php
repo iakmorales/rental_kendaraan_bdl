@@ -814,9 +814,59 @@ switch ($action) {
     
     case 'tools_indexing':
         requireLogin();
-        $query = "SELECT * FROM Rental WHERE status_rental = 'Aktif'";
-        $results = $adminToolsModel->getExplainAnalyze($query);
+        
+        $testResult = null;
+        $listKendaraanID = $adminToolsModel->getListKendaraanID(); // Untuk dropdown
+        
+        // Handle Form Submission
+        if (isset($_GET['run_test'])) {
+            $scenario = $_GET['scenario'];
+            $param = isset($_GET['param']) ? $_GET['param'] : '';
+            
+            $testResult = $adminToolsModel->runIndexingTest($scenario, $param);
+        }
+
         include 'views/tools/indexing.php';
+        break;
+        
+    case 'tools_functions':
+        requireLogin();
+        
+        
+        $listKendaraan = $kendaraanModel->getAllKendaraan2(); 
+        $listKendaraan2 = $kendaraanModel->getAllKendaraan3(); 
+        $listPelanggan = $pelangganModel->getAllPelanggan();
+
+        
+        $hasil_pendapatan = null;
+        if (isset($_POST['cek_pendapatan'])) {
+            $hasil_pendapatan = $adminToolsModel->getPendapatanKendaraan($_POST['kendaraan_id']);
+        }
+
+        
+        $hasil_riwayat = null;
+        if (isset($_POST['cek_riwayat'])) {
+            $hasil_riwayat = $adminToolsModel->getRiwayatKendaraan($_POST['kendaraan_id2']);
+        }
+
+        // 3. Handle Stored Procedure (Booking Express)
+        if (isset($_POST['booking_express'])) {
+            try {
+                $adminToolsModel->execBookingExpress(
+                    $_POST['pelanggan_id'], 
+                    $_POST['kendaraan_id'], 
+                    $_POST['lama_hari']
+                );
+                $_SESSION['success'] = "✅ Booking Express Berhasil via Stored Procedure!";
+            } catch (Exception $e) {
+                $_SESSION['error'] = "❌ Gagal: " . $e->getMessage();
+            }
+            // Refresh halaman agar form bersih
+            header("Location: index.php?action=tools_functions");
+            exit();
+        }
+
+        include 'views/laporan_rental/laporan_rental.php';
         break;
         
     //rental+sopir+pengembalian

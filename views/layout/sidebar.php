@@ -248,6 +248,13 @@
             </a>
         </li>
 
+        <li class="menu-item">
+            <a href="index.php?action=tools_functions" class="<?= $current=='tools_functions'?'active':'' ?>">
+                <span class="menu-icon"><i class="fa-solid fa-bolt"></i></span>
+                <span>???</span>
+            </a>
+        </li>
+
         <li class="menu-header">Admin Tools</li>
         <li class="menu-item">
             <a href="index.php?action=tools_indexing" class="<?= $current=='tools_indexing'?'active':'' ?>" onclick="closeSidebarOnMobile()">

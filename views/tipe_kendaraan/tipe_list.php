@@ -277,7 +277,7 @@ include 'views/layout/header.php';
                     <?php if ($tipeList->rowCount() > 0): ?>
                         <?php while ($row = $tipeList->fetch(PDO::FETCH_ASSOC)): ?>
                             <tr>
-                                <td><?php echo htmlspecialchars($row['tipe_id']); ?></td>
+                                <td><strong><?php echo htmlspecialchars($row['tipe_id']); ?></strong></td>
                                 <td><strong><?php echo htmlspecialchars($row['nama_tipe']); ?></strong></td>
                                 <td><?php echo htmlspecialchars($row['deskripsi']); ?></td>
                                 <td>
@@ -300,6 +300,13 @@ include 'views/layout/header.php';
                     <?php endif; ?>
                 </tbody>
             </table>
+        </div>
+
+        <div class="stats-footer">
+            <strong> 
+                <i class="fa-solid fa-chart-column"></i>  Total Data:
+            </strong>
+            <span><?php echo $tipeList->rowCount(); ?> Tipe Kendaraan terdaftar</span>
         </div>
     </div>
 </div>
