@@ -14,9 +14,6 @@ class adminToolsModel {
             'time_with' => 'N/A',
             'query_used' => ''
         ];
-
-        // Konfigurasi Skenario
-        // [Nama Index, Table Def, Query Test]
         switch ($scenario) {
             case 'kendaraan':
                 $indexName = "idx_rental_kendaraan_id";
