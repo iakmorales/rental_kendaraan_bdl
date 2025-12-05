@@ -229,7 +229,7 @@
         <li class="menu-item">
             <a href="index.php?action=laporan_rental_pengembalian" class="<?= $current=='laporan_rental_pengembalian'?'active':'' ?>" onclick="closeSidebarOnMobile()">
                 <span class="menu-icon"> <i class="fa-solid fa-car-side"></i> </span>
-                <span>Laporan Rental dan Pengembalian</span>
+                <span>Laporan Rental & Pengembalian</span>
             </a>
         </li>
 
@@ -251,7 +251,7 @@
         <li class="menu-item">
             <a href="index.php?action=tools_functions" class="<?= $current=='tools_functions'?'active':'' ?>">
                 <span class="menu-icon"><i class="fa-solid fa-bolt"></i></span>
-                <span>???</span>
+                <span>Laporan Rental & Booking Express</span>
             </a>
         </li>
 
