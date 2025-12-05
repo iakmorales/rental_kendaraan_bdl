@@ -37,7 +37,7 @@ class pengembalianModel {
         return $stmt->execute();
     }
 
-    // METHOD 3: Hitung keterlambatan pengembalian
+    // METHOD 3: Mengambil Function Hitung keterlambatan pengembalian
     public function hitungKeterlambatan($rental_id, $tanggal_kembali) {
         $query = "SELECT total_keterlambatan(:rental, :tgl) AS telat";
         $stmt = $this->conn->prepare($query);
@@ -47,7 +47,7 @@ class pengembalianModel {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // METHOD 4: Hitung denda keterlambatan
+    // METHOD 4: Mengambil Function Hitung denda keterlambatan
     public function hitungDenda($rental_id, $tanggal_kembali) {
         $query = "SELECT hitung_denda(:rental, :tgl) AS denda";
         $stmt = $this->conn->prepare($query);

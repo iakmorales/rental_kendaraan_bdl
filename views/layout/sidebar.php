@@ -255,13 +255,6 @@
                 <span>Indexing Check</span>
             </a>
         </li>
-
-        <li class="menu-item">
-            <a href="index.php?action=tools_transaction" class="<?= $current=='tools_transaction'?'active':'' ?>" onclick="closeSidebarOnMobile()">
-                <span class="menu-icon"><i class="fa-solid fa-database"></i></span>
-                <span>Transaction Test</span>
-            </a>
-        </li>
         
         <li class="menu-header">System</li>
         <li class="menu-item">

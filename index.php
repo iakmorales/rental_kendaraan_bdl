@@ -818,19 +818,6 @@ switch ($action) {
         $results = $adminToolsModel->getExplainAnalyze($query);
         include 'views/tools/indexing.php';
         break;
-
-    case 'tools_transaction':
-        requireLogin();
-        $simulation = null;
-        if (isset($_POST['test_type'])) {
-            if ($_POST['test_type'] == 'commit') {
-                $simulation = $adminToolsModel->simulasiTransaksiSukses();
-            } elseif ($_POST['test_type'] == 'rollback') {
-                $simulation = $adminToolsModel->simulasiTransaksiRollback();
-            }
-        }
-        include 'views/tools/transaction.php';
-        break;
         
     //rental+sopir+pengembalian
     case 'laporan_rental_pengembalian':
