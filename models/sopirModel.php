@@ -12,7 +12,7 @@ class sopirModel {
         $this->conn = $db;
     }
 
-     // METHOD 1: Read semua sopir
+     // METHOD 1: Read semua sopir dari database
     public function getAllSopir() {
         $query = "SELECT * FROM " . $this->table . " ORDER BY sopir_id DESC";
         $stmt = $this->conn->prepare($query);
