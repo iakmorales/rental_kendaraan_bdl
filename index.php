@@ -869,7 +869,7 @@ switch ($action) {
         include 'views/laporan_rental/laporan_rental.php';
         break;
         
-    //rental+sopir+pengembalian
+    //rental+pengembalian
     case 'laporan_rental_pengembalian':
         requireLogin();
         include 'views/rental_pengembalian/laporan_rental_pengembalian.php';

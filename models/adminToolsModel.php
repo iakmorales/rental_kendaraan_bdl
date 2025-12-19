@@ -104,6 +104,7 @@ class adminToolsModel {
         }
     }
 
+
     public function getRiwayatKendaraan($kendaraan_id) {
         try {
             $stmt = $this->conn->prepare("SELECT * FROM func_riwayat_rental_kendaraan(:id)");

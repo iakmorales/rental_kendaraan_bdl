@@ -24,8 +24,6 @@ class tipeKendaraanModel {
         $query = "INSERT INTO " . $this->table . " (nama_tipe, deskripsi) VALUES (:nama_tipe, :deskripsi)";
 
         $stmt = $this->conn->prepare($query);
-
-        // Bersihkan data
         $nama_tipe = htmlspecialchars(strip_tags($data['nama_tipe']));
         $deskripsi = htmlspecialchars(strip_tags($data['deskripsi']));
 
