@@ -31,19 +31,19 @@ class KendaraanModel {
     }
 
     public function getAllKendaraan3() {
-    try {
-        $stmt = $this->conn->prepare("
-            SELECT k.*, t.nama_tipe
-            FROM Kendaraan k
-            LEFT JOIN Tipe_Kendaraan t ON k.tipe_id = t.tipe_id
-            ORDER BY k.kendaraan_id ASC"
-        );
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    } catch (PDOException $e) {
-        return [];
+        try {
+            $stmt = $this->conn->prepare("
+                SELECT k.*, t.nama_tipe
+                FROM Kendaraan k
+                LEFT JOIN Tipe_Kendaraan t ON k.tipe_id = t.tipe_id
+                ORDER BY k.kendaraan_id ASC"
+            );
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            return [];
+        }
     }
-}
 
     // METHOD 2: Create kendaraan baru
     public function createKendaraan($data) {
