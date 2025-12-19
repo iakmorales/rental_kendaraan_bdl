@@ -240,7 +240,6 @@ switch ($action) {
                 header("Location: index.php?action=tipe_kendaraan");
             }
         } catch (PDOException $e) {
-            // Error Foreign Key (Masih ada mobil dengan tipe ini)
             $_SESSION['error'] = '❌ Tidak bisa menghapus tipe ini karena masih digunakan oleh data Kendaraan.';
             header("Location: index.php?action=tipe_kendaraan");
         }
@@ -494,7 +493,6 @@ switch ($action) {
                 header("Location: index.php?action=pelanggan");
             }
         } catch (PDOException $e) {
-            // Biasanya error karena Foreign Key (masih ada data rental)
             $_SESSION['error'] = '❌ Tidak bisa menghapus pelanggan ini karena masih memiliki riwayat Rental.';
             header("Location: index.php?action=pelanggan");
         }
@@ -504,7 +502,6 @@ switch ($action) {
     // rental
     case 'rental':
         requireLogin();
-        // Mengambil semua data rental untuk ditampilkan di list
         $rentals = $rentalModel->getAllRental();
         include 'views/rental/rental_list.php';
         break;
@@ -512,9 +509,7 @@ switch ($action) {
     case 'rental_create':
         requireLogin();
         
-        // Proses Form Submit
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            // Ambil data dari form
             $data = [
                 'pelanggan_id' => $_POST['pelanggan_id'],
                 'kendaraan_id' => $_POST['kendaraan_id'],
@@ -526,25 +521,20 @@ switch ($action) {
             ];
 
             try {
-                // Coba simpan ke database
                 if ($rentalModel->insertRental($data)) {
                     $_SESSION['success'] = '✅ Transaksi rental berhasil dibuat!';
                     header("Location: index.php?action=rental&message=created");
                     exit();
                 } else {
-                    // Fallback jika gagal tanpa exception
                     $_SESSION['error'] = '❌ Gagal membuat transaksi rental.';
                     $_SESSION['old_data'] = $_POST;
                 }
             } catch (Exception $e) {
-                // MENANGKAP ERROR DARI MODEL (Termasuk Trigger SIM)
-                // Pesan error dari trigger database akan ditangkap di sini
                 $_SESSION['error'] = '❌ ' . $e->getMessage();
                 $_SESSION['old_data'] = $_POST; // Simpan inputan user agar tidak hilang
             }
         }
         
-        // Tampilkan Form (Logic pengambilan data dropdown ada di dalam file view)
         include 'views/rental/rental_form.php';
         break;
     case 'rental_edit':
@@ -559,8 +549,6 @@ switch ($action) {
             header("Location: index.php?action=rental");
             exit();
         }
-        
-        // Load view (Form yang sama, variabel $rental akan terdeteksi di sana)
         include 'views/rental/rental_form.php';
         break;
 
@@ -603,8 +591,6 @@ switch ($action) {
         requireLogin();
         $id = $_GET['id'];
         
-        // Cek apakah rental bisa dihapus (Opsional: misal hanya yang belum selesai)
-        // Di sini kita langsung hapus saja sesuai request
         if ($rentalModel->deleteRental($id)) {
             $_SESSION['success'] = '✅ Data rental berhasil dihapus!';
             header("Location: index.php?action=rental&message=deleted");
